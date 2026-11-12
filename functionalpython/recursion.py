@@ -49,6 +49,9 @@ def trampoline(function: Callable[..., Any]) -> Callable[..., Any]:
     The decorated name can be called recursively from inside a thunk. Such a
     call returns its result (often another thunk) to the loop that is already
     running instead of starting a second, nested loop, so the stack stays flat.
+    More generally, while a trampoline loop is running on the current thread,
+    any call to a trampoline-decorated function returns its raw result to that
+    loop rather than unwrapping it.
 
     Because every callable result is treated as a thunk, a function decorated
     with ``trampoline`` must not return a callable as its final value.
