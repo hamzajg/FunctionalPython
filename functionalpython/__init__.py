@@ -17,11 +17,15 @@ from .higher_order import (
 from .lazy import chunks, fibonacci, naturals, take, unique_seen
 from .maybe import Just, Maybe, Nothing
 from .recursion import factorial, memoize, trampoline
+from .result import Err, Ok, Result, safe
 
 __all__ = [
+    "Err",
     "Just",
     "Maybe",
     "Nothing",
+    "Ok",
+    "Result",
     "apply_twice",
     "chunks",
     "compose",
@@ -38,6 +42,7 @@ __all__ = [
     "partial_apply",
     "pipe",
     "reduce_all",
+    "safe",
     "sort_by",
     "square_all",
     "take",

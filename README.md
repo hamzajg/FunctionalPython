@@ -3,7 +3,7 @@
 Small, dependency-free examples of functional programming in Python, each one
 covered by a test. The code follows the ideas in *Functional Programming with
 Python* (O'Reilly): pure functions, higher-order functions, composition,
-laziness, recursion, and a small `Maybe` monad.
+laziness, recursion, and the `Maybe` and `Result` monads.
 
 Everything uses the standard library only, so the examples run anywhere
 Python 3.9+ is installed.
@@ -30,6 +30,7 @@ python3 -m pip install -e .
 | [`functionalpython/lazy.py`](functionalpython/lazy.py) | Generators and `itertools`: infinite `naturals`, `fibonacci`, `take`, `chunks`, `unique_seen` |
 | [`functionalpython/recursion.py`](functionalpython/recursion.py) | `factorial`, `memoize`, and `trampoline` for recursion without growing the stack |
 | [`functionalpython/maybe.py`](functionalpython/maybe.py) | `Just` / `Nothing` with `map`, `bind`, and `get_or_else` |
+| [`functionalpython/result.py`](functionalpython/result.py) | `Ok` / `Err` for error handling without exceptions, with `map`, `map_err`, `bind`, `unwrap`, and a `safe` decorator |
 
 ## Examples
 
@@ -85,6 +86,29 @@ def half(n):
 Just(8).bind(half).map(lambda n: n + 1)   # Just(5)
 Just(3).bind(half).get_or_else(0)         # 0
 ```
+
+Carry failures as values instead of raising:
+
+```python
+from functionalpython import Err, Ok, safe
+
+@safe
+def parse(text):
+    return int(text)
+
+parse("42")                  # Ok(42)
+parse("forty-two")           # Err(ValueError(...))
+
+parse("42").map(lambda n: n * 2)        # Ok(84)
+parse("x").map(lambda n: n * 2)         # Err(...) — map is skipped
+parse("42").ok()                        # Just(42)
+parse("42").unwrap()                    # 42
+parse("x").get_or_else(0)               # 0
+```
+
+A failure short-circuits a `bind` chain exactly like an exception, but the
+outcome stays a value the caller can look at, recover from with `map_err`, or
+turn into a `Maybe` with `ok()` / `err()`.
 
 ## Layout
 
