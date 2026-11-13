@@ -21,11 +21,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # ubuntu-latest (26.04) no longer ships Python 3.9.
-          - python-version: "3.9"
-            os: ubuntu-22.04
-          - python-version: "3.12"
-            os: ubuntu-latest
           - python-version: "3.13"
             os: ubuntu-latest
     steps:
