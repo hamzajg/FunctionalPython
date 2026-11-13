@@ -7,7 +7,7 @@ name = "functionalpython"
 version = "0.1.0"
 description = "Small, tested examples of functional programming in Python"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.13"
 license = { file = "LICENSE" }
 keywords = ["functional-programming", "examples", "education"]
 classifiers = [
